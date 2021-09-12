@@ -31,33 +31,59 @@ var createAndSavePerson = function(done) {
   });
 };
 
-const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+var createManyPeople = function(arrayOfPeople, done) {
+  Person.create(arrayOfPeople, (err, data) => {
+    if (err) return console.error(err);
+    done(null, data);
+  });
+  //done(null/*, data*/);
 };
 
-const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+var findPeopleByName = function(personName, done) {
+  Person.find({ name: personName }, (err, data) => {
+    if (err) console.error(err);
+    done(null, data);
+  });
+  //done(null/*, data*/);
 };
 
-const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+var findOneByFood = function(food, done) {
+  Person.findOne({ favoriteFoods: food }, function(err, data) {
+    if (err) return console.error(err);
+    done(null, data);
+  });
 };
 
-const findPersonById = (personId, done) => {
-  done(null /*, data*/);
+var findPersonById = function(personId, done) {
+  Person.findById(personId, (err, data) => {
+    if (err) return console.error(err);
+    done(null, data);
+  });
 };
 
-const findEditThenSave = (personId, done) => {
-  const foodToAdd = "hamburger";
-
-  done(null /*, data*/);
+var findEditThenSave = function(personId, done) {
+  var foodToAdd = 'hamburger';
+  
+  Person.findById(personId, (err,data)=>{
+    if(err) return console.error(err);
+    data.favoriteFoods.push(foodToAdd);
+    data.save((err,data)=>{
+      if(err) return console.error(err);
+      done(null,data);
+    });
+  });
 };
 
-const findAndUpdate = (personName, done) => {
-  const ageToSet = 20;
+var findAndUpdate = function(personName, done) {
+  var ageToSet = 20;
+  Person.findOneAndUpdate({name:personName},{age:20},{new:true},(err,data)=>{
+    if(err) return console.error(err);
+    done(null,data);
+  });
 
-  done(null /*, data*/);
 };
+
+
 
 const removeById = (personId, done) => {
   done(null /*, data*/);
